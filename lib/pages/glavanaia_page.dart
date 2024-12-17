@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:star/models/app_provider.dart';
 
 class GlavanaiaPage extends StatefulWidget {
+  const GlavanaiaPage({super.key});
+
   @override
   State<GlavanaiaPage> createState() => _GlavanaiaPageState();
 }
@@ -9,6 +13,9 @@ class _GlavanaiaPageState extends State<GlavanaiaPage> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+
+    final notes = Provider.of<AppProvider>(context, listen: false).Notes;
+
     return Scaffold(
       backgroundColor: const Color(0xffFFF8E6),
       body: SafeArea(
@@ -40,7 +47,7 @@ class _GlavanaiaPageState extends State<GlavanaiaPage> {
             SizedBox(
               height: height * 0.02,
             ),
-            Text(""),
+            const Text(""),
           ],
         ),
       )),

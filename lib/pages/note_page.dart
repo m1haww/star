@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:star/models/app_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:star/models/note.dart';
 
 class NotePage extends StatefulWidget {
   const NotePage({super.key});
@@ -377,6 +380,12 @@ class _NotePageState extends State<NotePage> {
   }
 
   void _onDone() {
+    final provider = Provider.of<AppProvider>(context, listen: false);
+    provider.addNote(Note(
+        selectedAbout: selectedAbout,
+        selectedReminder: selectedReminder,
+        selectedColor: selectedColor ?? Colors.transparent));
+
     Navigator.pop(context, {
       'about': selectedAbout,
       'reminder': selectedReminder,

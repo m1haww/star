@@ -16,7 +16,7 @@ class _BarNavigareState extends State<BarNavigare> {
   int _currentIndex = 0;
 
   final List<Widget> _tabViews = [
-    GlavanaiaPage(),
+    const GlavanaiaPage(),
     const SearchingPage(),
     const SearchingPage(),
   ];
@@ -35,7 +35,7 @@ class _BarNavigareState extends State<BarNavigare> {
           Material(
             elevation: 0,
             color: Colors.transparent,
-            child: Container(
+            child: SizedBox(
               height: height * 0.12,
               child: CupertinoTabBar(
                 backgroundColor: Colors.transparent,

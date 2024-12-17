@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:star/models/app_provider.dart';
 import 'package:star/pages/splash_ecran.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => AppProvider(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
