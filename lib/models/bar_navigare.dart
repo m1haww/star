@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:star/pages/glavanaia_page.dart';
+import 'package:star/pages/home_page.dart';
 import 'package:star/pages/note_page.dart';
 import 'package:star/pages/searching_page.dart';
 
@@ -16,12 +17,16 @@ class _BarNavigareState extends State<BarNavigare> {
   int _currentIndex = 0;
 
   final List<Widget> _tabViews = [
+    const HomePage(),
     const GlavanaiaPage(),
-    const SearchingPage(),
     const SearchingPage(),
   ];
 
-  final List<IconData> _tabIcons = [CupertinoIcons.bars, CupertinoIcons.search];
+  final List<IconData> _tabIcons = [
+    CupertinoIcons.home,
+    CupertinoIcons.search,
+    CupertinoIcons.infinite
+  ];
 
   @override
   Widget build(BuildContext context) {

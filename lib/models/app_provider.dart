@@ -7,4 +7,9 @@ class AppProvider extends ChangeNotifier {
     Notes.add(notes);
     notifyListeners();
   }
+
+  void togglePinStatus(int index) {
+    Notes[index].isPinned = !Notes[index].isPinned;
+    notifyListeners();
+  }
 }

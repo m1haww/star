@@ -382,9 +382,10 @@ class _NotePageState extends State<NotePage> {
   void _onDone() {
     final provider = Provider.of<AppProvider>(context, listen: false);
     provider.addNote(Note(
-        selectedAbout: selectedAbout,
-        selectedReminder: selectedReminder,
-        selectedColor: selectedColor ?? Colors.transparent));
+      selectedAbout: selectedAbout,
+      selectedReminder: selectedReminder,
+      selectedColor: selectedColor ?? Colors.transparent,
+    ));
 
     Navigator.pop(context, {
       'about': selectedAbout,

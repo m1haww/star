@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class Note {
   final String selectedAbout;
-  final String selectedReminder;
+  late final String selectedReminder;
   final Color selectedColor;
-
-  Note(
-      {required this.selectedAbout,
-      required this.selectedReminder,
-      required this.selectedColor});
+  late final bool isPinned;
+  Note({
+    required this.selectedAbout,
+    required this.selectedReminder,
+    required this.selectedColor,
+    this.isPinned = false,
+  });
 }
