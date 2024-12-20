@@ -10,7 +10,7 @@ class SearchingPage extends StatefulWidget {
 class _SearchingPageState extends State<SearchingPage> {
   final TextEditingController _searchController = TextEditingController();
 
-  List<Map<String, String>> _notes = [
+  final List<Map<String, String>> _notes = [
     {
       'title': 'Buy groceries',
       'description': 'Milk, eggs, bread, butter, and more...',
@@ -59,6 +59,7 @@ class _SearchingPageState extends State<SearchingPage> {
     return Scaffold(
       backgroundColor: const Color(0xffFFF8E6),
       appBar: AppBar(
+        backgroundColor: const Color(0xffFFF8E6),
         title: const Text(
           'Search Notes',
           style: TextStyle(
@@ -76,7 +77,7 @@ class _SearchingPageState extends State<SearchingPage> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: const Color(0xffFFEEA9),
                 borderRadius: BorderRadius.circular(25),
                 boxShadow: [
                   BoxShadow(
@@ -92,7 +93,8 @@ class _SearchingPageState extends State<SearchingPage> {
                 decoration: InputDecoration(
                   hintText: 'Search your notes...',
                   hintStyle: TextStyle(color: Colors.grey.shade600),
-                  prefixIcon: Icon(Icons.search, color: Colors.deepPurple),
+                  prefixIcon:
+                      const Icon(Icons.search, color: Colors.deepPurple),
                   border: InputBorder.none,
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
@@ -132,45 +134,48 @@ class _SearchingPageState extends State<SearchingPage> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
-                            child: ListTile(
-                              contentPadding: const EdgeInsets.all(16),
-                              tileColor: Colors.white,
-                              title: Text(
-                                note['title']!,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
+                            child: Container(
+                              color: const Color(0xffFFEEA9),
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.all(16),
+                                tileColor: Colors.white,
+                                title: Text(
+                                  note['title']!,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    note['description']!,
-                                    style: TextStyle(color: Colors.grey[600]),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    'Date: ${note['date']}',
-                                    style: TextStyle(color: Colors.grey[500]),
-                                  ),
-                                ],
-                              ),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.delete,
-                                    color: Colors.redAccent),
-                                onPressed: () {
-                                  setState(() {
-                                    _notes.removeAt(index);
-                                    _filteredNotes = _notes
-                                        .where((note) => note['title']!
-                                            .toLowerCase()
-                                            .contains(_searchController.text
-                                                .toLowerCase()))
-                                        .toList();
-                                    showFinallConfirmation();
-                                  });
-                                },
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      note['description']!,
+                                      style: TextStyle(color: Colors.grey[600]),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      'Date: ${note['date']}',
+                                      style: TextStyle(color: Colors.grey[500]),
+                                    ),
+                                  ],
+                                ),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.delete,
+                                      color: Colors.redAccent),
+                                  onPressed: () {
+                                    setState(() {
+                                      _notes.removeAt(index);
+                                      _filteredNotes = _notes
+                                          .where((note) => note['title']!
+                                              .toLowerCase()
+                                              .contains(_searchController.text
+                                                  .toLowerCase()))
+                                          .toList();
+                                      showFinallConfirmation();
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                           ),

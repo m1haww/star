@@ -21,7 +21,7 @@ class _NotePageState extends State<NotePage> {
     return Scaffold(
       backgroundColor: const Color(0xffFFF8E6),
       appBar: AppBar(
-        backgroundColor: const Color(0xffC4B319),
+        backgroundColor: const Color(0xffFFF8E6),
         centerTitle: true,
         title: const Text(
           "Choose option",

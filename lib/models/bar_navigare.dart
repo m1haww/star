@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:star/pages/glavanaia_page.dart';
 import 'package:star/pages/home_page.dart';
 import 'package:star/pages/note_page.dart';

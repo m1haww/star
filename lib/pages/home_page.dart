@@ -14,7 +14,9 @@ class _HomePageState extends State<HomePage> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: const Color(0xffFFF8E6),
       appBar: AppBar(
+        backgroundColor: const Color(0xffFFF8E6),
         title: const Text('Featured Events'),
       ),
       body: SafeArea(
@@ -49,6 +51,7 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                       child: Card(
+                        color: const Color(0xffFFEEA9),
                         margin: const EdgeInsets.only(bottom: 20),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -116,7 +119,7 @@ class _HomePageState extends State<HomePage> {
 class ArticleDetailPage extends StatelessWidget {
   final Article article;
 
-  const ArticleDetailPage({Key? key, required this.article}) : super(key: key);
+  const ArticleDetailPage({super.key, required this.article});
 
   @override
   Widget build(BuildContext context) {
