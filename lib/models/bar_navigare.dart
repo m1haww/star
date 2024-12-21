@@ -23,7 +23,7 @@ class _BarNavigareState extends State<BarNavigare> {
 
   final List<IconData> _tabIcons = [
     CupertinoIcons.home,
-    CupertinoIcons.search,
+    CupertinoIcons.book,
     CupertinoIcons.infinite
   ];
 
@@ -31,7 +31,7 @@ class _BarNavigareState extends State<BarNavigare> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: const Color(0xffFFF8E6),
+      backgroundColor: const Color(0xffFCF596),
       body: _tabViews[_currentIndex],
       bottomNavigationBar: Stack(
         alignment: Alignment.center,

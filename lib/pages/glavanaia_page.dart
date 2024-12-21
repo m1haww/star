@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:star/models/app_provider.dart';
+import 'package:star/models/note.dart';
 import 'package:star/pages/home_page.dart';
 import 'package:star/pages/note_page.dart';
 import 'package:star/pages/searching_page.dart';
@@ -20,14 +22,11 @@ class _GlavanaiaPageState extends State<GlavanaiaPage> {
     final height = MediaQuery.of(context).size.height;
     final notes = Provider.of<AppProvider>(context).Notes;
 
-    final pinnedNotes = notes.where((note) => note.isPinned).toList();
-    final unpinnedNotes = notes.where((note) => !note.isPinned).toList();
-
     return Scaffold(
-      backgroundColor: const Color(0xffFFF8E6),
+      backgroundColor: const Color(0xffFCF596),
       appBar: AppBar(
-        backgroundColor: const Color(0xffFFF8E6),
-        title: Text("Search"),
+        backgroundColor: const Color(0xffFCF596),
+        title: const Text("Search"),
         actions: [
           GestureDetector(
             child: const Padding(
@@ -91,132 +90,7 @@ class _GlavanaiaPageState extends State<GlavanaiaPage> {
                         ),
                       ),
                     ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: notes.length,
-                  itemBuilder: (context, index) {
-                    final note = notes[index];
-                    return Card(
-                      elevation: 2,
-                      margin: const EdgeInsets.symmetric(vertical: 8),
-                      child: Column(
-                        children: [
-                          ListTile(
-                            tileColor: note.selectedColor,
-                            title: Text(
-                              note.selectedAbout,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontFamily: "Js",
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: Icon(
-                                    note.isPinned
-                                        ? Icons.push_pin
-                                        : Icons.push_pin_outlined,
-                                    color: note.isPinned
-                                        ? Colors.blue
-                                        : Colors.grey,
-                                  ),
-                                  onPressed: () {
-                                    Provider.of<AppProvider>(context,
-                                            listen: false)
-                                        .togglePinStatus(index);
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () {
-                                    Provider.of<AppProvider>(context,
-                                            listen: false)
-                                        .Notes
-                                        .removeAt(index);
-                                    Provider.of<AppProvider>(context,
-                                            listen: false)
-                                        .notifyListeners();
-                                    showFinallConfirmation();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (note.isPinned)
-                                  const Text(
-                                    "Pinned",
-                                    style: TextStyle(
-                                      color: Colors.blue,
-                                      fontFamily: "Js",
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                const SizedBox(height: 4),
-                                // TextField for editing the reminder
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
-                                        blurRadius: 8,
-                                        offset: const Offset(0, 4),
-                                      ),
-                                    ],
-                                  ),
-                                  child: TextField(
-                                    controller: TextEditingController(
-                                        text: note.selectedReminder),
-                                    decoration: InputDecoration(
-                                      hintText: "Edit your reminder",
-                                      hintStyle:
-                                          TextStyle(color: Colors.grey[600]),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      filled: true,
-                                      fillColor: Colors.grey.shade100,
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 16, vertical: 12),
-                                      prefixIcon: Icon(
-                                        Icons.edit,
-                                        color: Colors.blue.shade300,
-                                      ),
-                                    ),
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: "Js",
-                                        fontWeight: FontWeight.w500),
-                                    onChanged: (value) {
-                                      note.selectedReminder = value;
-                                      Provider.of<AppProvider>(context,
-                                              listen: false)
-                                          .notifyListeners();
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
+              buildNoteList(notes, context),
             ],
           ),
         ),
@@ -277,6 +151,130 @@ class _GlavanaiaPageState extends State<GlavanaiaPage> {
           ],
         );
       },
+    );
+  }
+
+  Expanded buildNoteList(List<Note> notes, BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: notes.length,
+        itemBuilder: (context, index) {
+          final note = notes[index];
+          return Card(
+            elevation: 2,
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: Column(
+              children: [
+                ListTile(
+                  tileColor: note.selectedColor,
+                  title: Text(
+                    note.selectedAbout,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontFamily: "Js",
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: note.isSaved
+                            ? const Icon(
+                                CupertinoIcons.bookmark_fill,
+                                color: Colors.black,
+                              )
+                            : const Icon(
+                                CupertinoIcons.bookmark,
+                                color: Colors.white,
+                              ),
+                        onPressed: () {
+                          Provider.of<AppProvider>(context, listen: false)
+                              .toggleSavedStatus(index);
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          Provider.of<AppProvider>(context, listen: false)
+                              .Notes
+                              .removeAt(index);
+                          Provider.of<AppProvider>(context, listen: false)
+                              .notifyListeners();
+                          showFinallConfirmation();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (note.isSaved)
+                        const Text(
+                          "Pinned",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontFamily: "Js",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      const SizedBox(height: 4),
+                      // TextField for editing the reminder
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: TextField(
+                          controller: TextEditingController(
+                              text: note.selectedReminder),
+                          decoration: InputDecoration(
+                            hintText: "Edit your reminder",
+                            hintStyle: TextStyle(color: Colors.grey[600]),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey.shade100,
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 12),
+                            prefixIcon: Icon(
+                              Icons.edit,
+                              color: Colors.blue.shade300,
+                            ),
+                          ),
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontFamily: "Js",
+                              fontWeight: FontWeight.w500),
+                          onChanged: (value) {
+                            note.selectedReminder = value;
+                            Provider.of<AppProvider>(context, listen: false)
+                                .notifyListeners();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

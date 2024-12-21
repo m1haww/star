@@ -14,9 +14,9 @@ class _HomePageState extends State<HomePage> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: const Color(0xffFFF8E6),
+      backgroundColor: const Color(0xffFCF596),
       appBar: AppBar(
-        backgroundColor: const Color(0xffFFF8E6),
+        backgroundColor: const Color(0xffFCF596),
         title: const Text('Featured Events'),
       ),
       body: SafeArea(
