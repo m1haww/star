@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:star/models/articles.dart'; // Assuming Articles model is defined elsewhere
+import 'package:star/models/articles.dart';
+import 'package:star/pages/person_page.dart'; // Assuming Articles model is defined elsewhere
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,6 +19,18 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: const Color(0xffFCF596),
         title: const Text('Featured Events'),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PersonPage(),
+                  ));
+              Icon(Icons.person);
+            },
+          )
+        ],
       ),
       body: SafeArea(
         child: Padding(

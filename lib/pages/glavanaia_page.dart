@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:star/models/app_provider.dart';
 import 'package:star/models/note.dart';
-import 'package:star/pages/home_page.dart';
-import 'package:star/pages/note_page.dart';
 import 'package:star/pages/searching_page.dart';
 
 class GlavanaiaPage extends StatefulWidget {
