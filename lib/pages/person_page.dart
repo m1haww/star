@@ -10,16 +10,15 @@ class PersonPage extends StatefulWidget {
 }
 
 class _PersonPageState extends State<PersonPage> {
-  File? _avatarImage; // Imaginea selectată din galerie
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
 
-  // Funcție pentru selectarea imaginii
   Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
+    if (image != null) {
       setState(() {
-        _avatarImage = File(pickedFile.path);
+        _image = File(image.path);
       });
     }
   }
@@ -29,6 +28,17 @@ class _PersonPageState extends State<PersonPage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xffFBD288),
+        title: Text("Profile"),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back_ios),
+        ),
+      ),
+      backgroundColor: Color(0xffFBD288),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -43,20 +53,27 @@ class _PersonPageState extends State<PersonPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: _pickImage, // Apăsarea avatarului deschide galeria
-                      child: CircleAvatar(
-                        radius: 60,
-                        backgroundImage: _avatarImage != null
-                            ? FileImage(_avatarImage!)
-                            : const AssetImage('images/profile.webp')
-                                as ImageProvider,
-                        child: _avatarImage == null
-                            ? const Icon(
-                                Icons.camera_alt,
-                                size: 30,
-                                color: Colors.black,
-                              )
-                            : null,
+                      onTap: _pickImage,
+                      child: ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(100), // Colțuri rotunjite
+                        child: Container(
+                          width: MediaQuery.of(context).size.height *
+                              0.15, // Lățimea imaginii
+                          height: MediaQuery.of(context).size.height *
+                              0.15, // Înălțimea imaginii
+                          color: Colors.grey
+                              .shade200, // Fundal implicit dacă imaginea lipsește
+                          child: _image == null
+                              ? Image.asset(
+                                  'images/profile.webp',
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.file(
+                                  _image!,
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -131,7 +148,6 @@ class _PersonPageState extends State<PersonPage> {
     );
   }
 
-  // Widget pentru câmpuri editabile
   Widget _buildTextField({
     required String label,
     required String hint,
@@ -143,11 +159,27 @@ class _PersonPageState extends State<PersonPage> {
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
-        prefixIcon: Icon(icon),
+        hintStyle:
+            TextStyle(color: Colors.grey[600], fontStyle: FontStyle.italic),
+        prefixIcon: Icon(icon, color: Colors.orange[700]),
+        filled: true,
+        fillColor: const Color(0xFFFCF596), // Soft yellow background
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: BorderSide(color: Colors.orange[700]!, width: 1.5),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: const BorderSide(color: Colors.orange, width: 2),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: BorderSide(color: Colors.orange[700]!, width: 1.5),
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       ),
+      style: const TextStyle(fontSize: 16, color: Colors.black),
     );
   }
 }

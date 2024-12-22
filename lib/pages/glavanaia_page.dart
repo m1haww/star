@@ -19,6 +19,8 @@ class _GlavanaiaPageState extends State<GlavanaiaPage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final notes = Provider.of<AppProvider>(context).Notes;
+    final pinnedNotes = notes.where((note) => note.isSaved).toList();
+    final unpinnedNotes = notes.where((note) => !note.isSaved).toList();
 
     return Scaffold(
       backgroundColor: const Color(0xffFCF596),
@@ -67,7 +69,7 @@ class _GlavanaiaPageState extends State<GlavanaiaPage> {
                 ),
               ),
               SizedBox(height: height * 0.02),
-              notes.isEmpty
+              pinnedNotes.isEmpty
                   ? const Center(
                       child: Text(
                         "No reminders pinned.",
@@ -78,17 +80,30 @@ class _GlavanaiaPageState extends State<GlavanaiaPage> {
                         ),
                       ),
                     )
-                  : const Center(
+                  : buildNoteList(pinnedNotes, context),
+              const SizedBox(height: 20), // Spațiu între secțiuni
+              const Text(
+                "Other Reminders",
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontFamily: "Js",
+                  fontSize: 19,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: height * 0.02),
+              unpinnedNotes.isEmpty
+                  ? const Center(
                       child: Text(
-                        "No reminders pinned.",
+                        "No other reminders.",
                         style: TextStyle(
                           color: Colors.grey,
                           fontFamily: "Js",
                           fontSize: 16,
                         ),
                       ),
-                    ),
-              buildNoteList(notes, context),
+                    )
+                  : buildNoteList(unpinnedNotes, context),
             ],
           ),
         ),
@@ -240,24 +255,32 @@ class _GlavanaiaPageState extends State<GlavanaiaPage> {
                               text: note.selectedReminder),
                           decoration: InputDecoration(
                             hintText: "Edit your reminder",
-                            hintStyle: TextStyle(color: Colors.grey[600]),
+                            hintStyle: TextStyle(
+                                color: Colors.grey[500],
+                                fontStyle: FontStyle.italic),
+                            filled: true,
+                            fillColor: Colors.grey[100],
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
+                              borderSide: BorderSide(
+                                  color: Colors.grey[300]!, width: 1),
                             ),
-                            filled: true,
-                            fillColor: Colors.grey.shade100,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: const BorderSide(
+                                  color: Colors.blue, width: 2),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                  color: Colors.grey[300]!, width: 1),
+                            ),
                             contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 12),
-                            prefixIcon: Icon(
-                              Icons.edit,
-                              color: Colors.blue.shade300,
-                            ),
+                                vertical: 16, horizontal: 12),
                           ),
                           style: const TextStyle(
-                              fontSize: 16,
-                              fontFamily: "Js",
-                              fontWeight: FontWeight.w500),
+                              fontSize: 16, color: Colors.black),
+                          maxLines: null, // Allows multi-line input
                           onChanged: (value) {
                             note.selectedReminder = value;
                             Provider.of<AppProvider>(context, listen: false)

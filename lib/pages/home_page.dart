@@ -18,16 +18,19 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: const Color(0xffFCF596),
       appBar: AppBar(
         backgroundColor: const Color(0xffFCF596),
-        title: const Text('Featured Events'),
+        title: const Text("Featured Events"),
         actions: [
           GestureDetector(
+            child: const Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: Icon(Icons.person),
+            ),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PersonPage(),
+                    builder: (context) => const PersonPage(),
                   ));
-              Icon(Icons.person);
             },
           )
         ],

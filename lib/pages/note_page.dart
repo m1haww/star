@@ -39,37 +39,45 @@ class _NotePageState extends State<NotePage> {
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildSectionTitle("About"),
-              _buildOptions(
-                ["Work", "Study", "Events", "Others"],
-                (option) => _showConfirmationDialog(option, "about"),
-              ),
-              _buildDynamicContainer("About", selectedAbout),
-              _buildSectionTitle("Reminder"),
-              _buildOptions(
-                ["Today", "Tomorrow", "Week", "Month"],
-                (option) => _showConfirmationDialog(option, "reminder"),
-              ),
-              _buildDynamicContainer("Reminder", selectedReminder),
-              _buildSectionTitle("Colors"),
-              _buildColorOptions([
-                const Color(0xffFC95D3),
-                const Color(0xffC5DAFE),
-                const Color(0xffE6F16C),
-                const Color(0xff7AE3B7),
-                const Color(0xffE28EE3),
-              ]),
-              _buildColorContainer(selectedColor),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              _buildFinalContainer(),
-            ],
-          ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildSectionTitle("About"),
+                        _buildOptions(
+                          ["Work", "Study", "Events", "Others"],
+                          (option) => _showConfirmationDialog(option, "about"),
+                        ),
+                        _buildDynamicContainer("About", selectedAbout),
+                        _buildSectionTitle("Reminder"),
+                        _buildOptions(
+                          ["Today", "Tomorrow", "Week", "Month"],
+                          (option) =>
+                              _showConfirmationDialog(option, "reminder"),
+                        ),
+                        _buildDynamicContainer("Reminder", selectedReminder),
+                        _buildSectionTitle("Colors"),
+                        _buildColorOptions([
+                          const Color(0xffFC95D3),
+                          const Color(0xffC5DAFE),
+                          const Color(0xffE6F16C),
+                          const Color(0xff7AE3B7),
+                          const Color(0xffE28EE3),
+                        ]),
+                        _buildColorContainer(selectedColor),
+                      ],
+                    ),
+                  ),
+                ),
+                _buildFinalContainer(),
+              ],
+            );
+          },
         ),
       ),
     );

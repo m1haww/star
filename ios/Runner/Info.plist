@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to allow you to upload and use your images for personalized content within the app.</string>
 	<key>CFBundleDisplayName</key>
 	<string>Star</string>
 	<key>CFBundleExecutable</key>
