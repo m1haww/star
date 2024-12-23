@@ -67,7 +67,7 @@ class _BarNavigareState extends State<BarNavigare> {
             ),
           ),
           Positioned(
-            bottom: height * 0.03,
+            bottom: height * 0.05,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: FloatingActionButton(

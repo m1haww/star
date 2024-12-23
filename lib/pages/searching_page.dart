@@ -59,6 +59,7 @@ class _SearchingPageState extends State<SearchingPage> {
     return Scaffold(
       backgroundColor: const Color(0xffFFF8E6),
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         backgroundColor: const Color(0xffFFF8E6),
         title: const Text(
           'Search Notes',
@@ -126,19 +127,15 @@ class _SearchingPageState extends State<SearchingPage> {
                       itemCount: _filteredNotes.length,
                       itemBuilder: (context, index) {
                         final note = _filteredNotes[index];
-                        return Card(
-                          elevation: 5,
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
                             child: Container(
                               color: const Color(0xffFFEEA9),
                               child: ListTile(
                                 contentPadding: const EdgeInsets.all(16),
-                                tileColor: Colors.white,
+                                tileColor: Colors.transparent,
                                 title: Text(
                                   note['title']!,
                                   style: const TextStyle(
@@ -164,16 +161,7 @@ class _SearchingPageState extends State<SearchingPage> {
                                   icon: const Icon(Icons.delete,
                                       color: Colors.redAccent),
                                   onPressed: () {
-                                    setState(() {
-                                      _notes.removeAt(index);
-                                      _filteredNotes = _notes
-                                          .where((note) => note['title']!
-                                              .toLowerCase()
-                                              .contains(_searchController.text
-                                                  .toLowerCase()))
-                                          .toList();
-                                      showFinallConfirmation();
-                                    });
+                                    showFinallConfirmation(index);
                                   },
                                 ),
                               ),
@@ -189,7 +177,7 @@ class _SearchingPageState extends State<SearchingPage> {
     );
   }
 
-  void showFinallConfirmation() {
+  void showFinallConfirmation(int index) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -216,7 +204,7 @@ class _SearchingPageState extends State<SearchingPage> {
                 child: ElevatedButton.icon(
                   icon: const Icon(Icons.done, color: Colors.white),
                   label: const Text(
-                    'Got it!',
+                    'Yes',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -232,9 +220,14 @@ class _SearchingPageState extends State<SearchingPage> {
                         horizontal: 20, vertical: 10),
                   ),
                   onPressed: () {
-                    setState(() {
-                      Navigator.pop(context);
-                    });
+                    _notes.removeAt(index);
+                    _filteredNotes = _notes
+                        .where((note) => note['title']!
+                            .toLowerCase()
+                            .contains(_searchController.text.toLowerCase()))
+                        .toList();
+                    Navigator.pop(context);
+                    setState(() {});
                   },
                 ),
               ),

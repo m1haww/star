@@ -29,8 +29,8 @@ class _PersonPageState extends State<PersonPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xffFBD288),
-        title: Text("Profile"),
+        backgroundColor: const Color(0xffFBD288),
+        title: const Text("Profile"),
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
@@ -38,7 +38,7 @@ class _PersonPageState extends State<PersonPage> {
           child: const Icon(Icons.arrow_back_ios),
         ),
       ),
-      backgroundColor: Color(0xffFBD288),
+      backgroundColor: const Color(0xffFBD288),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

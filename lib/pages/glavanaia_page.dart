@@ -71,13 +71,17 @@ class _GlavanaiaPageState extends State<GlavanaiaPage> {
               SizedBox(height: height * 0.02),
               pinnedNotes.isEmpty
                   ? const Center(
-                      child: Text(
-                        "No reminders pinned.",
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontFamily: "Js",
-                          fontSize: 16,
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "No reminders pinned.",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   : buildNoteList(pinnedNotes, context),
@@ -94,13 +98,17 @@ class _GlavanaiaPageState extends State<GlavanaiaPage> {
               SizedBox(height: height * 0.02),
               unpinnedNotes.isEmpty
                   ? const Center(
-                      child: Text(
-                        "No other reminders.",
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontFamily: "Js",
-                          fontSize: 16,
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "No other reminders.",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   : buildNoteList(unpinnedNotes, context),
